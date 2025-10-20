@@ -12,10 +12,38 @@ repositories {
     mavenCentral()
 }
 
+//swt_version = "3.119.0" // Use the appropriate SWT version
+
+// Define the SWT version
+ext.swtVersion = '4.3' // Replace with a recent SWT version, e.g., '4.32'
+
+// Determine the correct SWT artifact based on the operating system
+def swtArtifact
+def osName = System.getProperty('os.name').toLowerCase()
+def osArch = System.getProperty('os.arch').toLowerCase()
+
+if (osName.contains('win')) {
+    swtArtifact = "org.eclipse.swt.win32.win32.${osArch.contains('64') ? 'x86_64' : 'x86'}"
+} else if (osName.contains('mac')) {
+    swtArtifact = "org.eclipse.swt.cocoa.macosx.${osArch.contains('aarch64') ? 'aarch64' : 'x86_64'}"
+} else if (osName.contains('linux')) {
+    swtArtifact = "org.eclipse.swt.gtk.linux.${osArch.contains('64') ? 'x86_64' : 'x86'}"
+} else {
+    throw new GradleException("Unsupported OS for SWT: ${osName}")
+}
+
+swtArtifact = "org.eclipse.swt.win32.win32.x86_64"
 dependencies {
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+//    implementation 'org.eclipse.platform:org.eclipse.swt.win32.win32.x86_64:3.130.0'
+//    implementation "org.eclipse.swt:org.eclipse.swt.win32.win32.x86_64:4.3"
+//    implementation("org.eclipse.platform:org.eclipse.swt.win32.win32.x86_64:3.131.0")
+
+    // https://mvnrepository.com/artifact/org.eclipse.platform/org.eclipse.swt.win32.win32.x86_64
+    implementation group: 'org.eclipse.platform', name: 'org.eclipse.swt.win32.win32.x86_64', version: '3.131.0'
 }
 
 application {

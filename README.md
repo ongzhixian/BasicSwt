@@ -12,6 +12,12 @@
 .\gradlew run
 ```
 
+Running as JAR file
+
+```in build\libs
+java -jar .\SwtApp-1.0-SNAPSHOT.jar
+```
+
 # Run Tests
 
 ```ps1

@@ -5,6 +5,8 @@ plugins {
 
 group = 'com.readyperfectly'
 version = '1.0-SNAPSHOT'
+//sourceCompatibility = '17' // Or your desired Java version
+//targetCompatibility = '17'
 
 repositories {
     mavenCentral()
@@ -22,6 +24,12 @@ application {
 
 test {
     useJUnitPlatform()
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'org.example.Main'
+    }
 }
 
 // Optional: Configure Java toolchain
